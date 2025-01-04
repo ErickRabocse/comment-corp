@@ -4,4 +4,9 @@
 //   formEl.classList.add('form_hover')
 // })
 
-// VIDEO 35 - MINUTE 19
+// VIDEO 35 - MINUTE
+const textareaEl = document.querySelector('.form__textarea')
+const inputHandler = (e) => {
+  console.log(e.target.value.length)
+}
+textareaEl.addEventListener('input', inputHandler)
