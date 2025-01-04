@@ -6,12 +6,16 @@
 
 // VIDEO 35 - MINUTE
 const textareaEl = document.querySelector('.form__textarea')
+const counterEl = document.querySelector('.counter')
+
 const inputHandler = (e) => {
   //determine max num of characters 150
   const maxChars = 150
-  //determine num of characters typed
+  //determine num of characters typed (instead of "e" could be textarea)
   const charsTyped = e.target.value.length
+  //calculate the num of characters left
   const charsLeft = maxChars - charsTyped
-  console.log(charsLeft)
+  //show number of characters left
+  counterEl.textContent = charsLeft
 }
 textareaEl.addEventListener('input', inputHandler)
