@@ -31,6 +31,7 @@ const submitHandler = (e) => {
   const text = textareaEl.value
   // validate if text has a #
   if (text.includes('#')) {
+    //add class
   } else {
   }
 }
