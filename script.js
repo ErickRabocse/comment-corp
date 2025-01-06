@@ -30,9 +30,17 @@ const submitHandler = (e) => {
   // get text from textarea
   const text = textareaEl.value
   // validate if text has a #
-  if (text.includes('#')) {
-    //add class
+  if (text.includes('#') && text.length >= 5) {
+    //add class to color form outline
+    formEl.classList.add('form--valid')
+    setTimeout(() => {
+      formEl.classList.remove('form--valid')
+    }, 2000)
   } else {
+    formEl.classList.add('form--invalid')
+    setTimeout(() => {
+      formEl.classList.remove('form--invalid')
+    }, 2000)
   }
 }
 formEl.addEventListener('submit', submitHandler)
