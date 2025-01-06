@@ -2,9 +2,13 @@
 //   formEl.classList.add('form_hover')
 
 // VIDEO 35 - MINUTE
-// COUNTER COMPONENT //
+
+// -- GLOBAL --
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
+const formEl = document.querySelector('.form')
+
+// -- COUNTER COMPONENT --
 
 const inputHandler = (e) => {
   //determine max num of characters 150
@@ -18,12 +22,16 @@ const inputHandler = (e) => {
 }
 textareaEl.addEventListener('input', inputHandler)
 
-//FORM COMPONENT
+// -- FORM COMPONENT --
 //the "submit-event" is linked to "forms" & "click-e" is linked to buttons
-const formEl = document.querySelector('.form')
 const submitHandler = (e) => {
   // preventing default browser action of submitting data to "action" address trhough refresh.
   e.preventDefault()
-  console.log(10)
+  // get text from textarea
+  const text = textareaEl.value
+  // validate if text has a #
+  if (text.includes('#')) {
+  } else {
+  }
 }
 formEl.addEventListener('submit', submitHandler)
