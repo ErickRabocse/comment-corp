@@ -3,6 +3,7 @@
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
 const formEl = document.querySelector('.form')
+const listEl = document.querySelector('.feedbacks')
 
 // -- COUNTER COMPONENT --
 
@@ -43,14 +44,6 @@ const submitHandler = (e) => {
     // stop the fn execution
     return
   }
-  // Now that we have the text let's extract: company name, company's 1st letter & date
-  const hashtag = text.split(' ').find((word) => word.includes('#'))
-  const company = hashtag.substring(1)
-  const badgeLetter = company.substring(0, 1).toUpperCase()
-  console.log(hashtag, company, badgeLetter)
-  const upvoteCount = 0
-  const daysAgo = 0
-
   // LOOPING TO FIND THE HASHTAG, WILL USE FIND INSTEAD
   // const brandFeedback = text.split(' ')
   // var company = null
@@ -61,8 +54,32 @@ const submitHandler = (e) => {
   //     hashtag = company.substring(0, 1).toUpperCase()
   //   }
   // })
-  // console.log(company)
-  // console.log(hashtag)
+  // Now that we have the text let's extract: company name, company's 1st letter & date
+  const hashtag = text.split(' ').find((word) => word.includes('#'))
+  const company = hashtag.substring(1)
+  const badgeLetter = company.substring(0, 1).toUpperCase()
+  console.log(hashtag, company, badgeLetter)
+  const upvoteCount = 0
+  const daysAgo = 0
+  // creating new feedback item HTML
+  const newfeedbackItemHTML = `
+  <li class="feedback">
+    <button class="upvote">
+        <i class="fa-solid fa-caret-up upvote__icon"></i>
+        <span class="upvote__count">${upvoteCount}</span>
+    </button>
+    <section class="feedback__badge">
+        <p class="feedback__letter">${badgeLetter}</p>
+    </section>
+    <div class="feedback__content">
+        <p class="feedback__company">${company}</p>
+        <p class="feedback__text">${text}</p>
+    </div>
+    <p class="feedback__date">${daysAgo}</p>
+  </li>
+  `
+  // Insert feedback content into list
+  listEl.insertAdjacentHTML('beforeend', newfeedbackItemHTML)
 }
 formEl.addEventListener('submit', submitHandler)
 
