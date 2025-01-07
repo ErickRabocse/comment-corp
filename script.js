@@ -4,6 +4,7 @@ const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
 const formEl = document.querySelector('.form')
 const feedbackListEl = document.querySelector('.feedbacks')
+const submitBtnEl = document.querySelector('.submit-btn')
 
 // -- COUNTER COMPONENT --
 
@@ -80,10 +81,13 @@ const submitHandler = (e) => {
   `
   // Insert feedback content into list
   feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
-  // clear text area
-  textareaEl.textContent = ' '
+  // clear text area, since it's an input we can use value
+  textareaEl.value = ''
   // blur submit btn
+  submitBtnEl.blur()
+  // reset counter, since it is plain text we can use textContent
+  counterEl.textContent = 150
 }
 formEl.addEventListener('submit', submitHandler)
 
-// -- VIDEO 36 - MINUTE 30
+// -- VIDEO 37 - MINUTE 00
