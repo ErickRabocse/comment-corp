@@ -3,7 +3,7 @@
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
 const formEl = document.querySelector('.form')
-const listEl = document.querySelector('.feedbacks')
+const feedbackListEl = document.querySelector('.feedbacks')
 
 // -- COUNTER COMPONENT --
 
@@ -62,7 +62,7 @@ const submitHandler = (e) => {
   const upvoteCount = 0
   const daysAgo = 0
   // creating new feedback item HTML
-  const newfeedbackItemHTML = `
+  const feedbackItemHTML = `
   <li class="feedback">
     <button class="upvote">
         <i class="fa-solid fa-caret-up upvote__icon"></i>
@@ -75,11 +75,14 @@ const submitHandler = (e) => {
         <p class="feedback__company">${company}</p>
         <p class="feedback__text">${text}</p>
     </div>
-    <p class="feedback__date">${daysAgo}</p>
+    <p class="feedback__date">${daysAgo === 0 ? 'NEW' : `${daysAgo}d`}</p>
   </li>
   `
   // Insert feedback content into list
-  listEl.insertAdjacentHTML('beforeend', newfeedbackItemHTML)
+  feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+  // clear text area
+  textareaEl.textContent = ' '
+  // blur submit btn
 }
 formEl.addEventListener('submit', submitHandler)
 
