@@ -44,23 +44,25 @@ const submitHandler = (e) => {
     return
   }
   // Now that we have the text let's extract: company name, company's 1st letter & date
-  // const hashtag;
-  // const company
-  // const badgeLetter= 0
-  // const daysAgo = 0
+  const hashtag = text.split(' ').find((word) => word.includes('#'))
+  const company = hashtag.substring(1)
+  const badgeLetter = company.substring(0, 1).toUpperCase()
+  console.log(hashtag, company, badgeLetter)
+  const upvoteCount = 0
+  const daysAgo = 0
 
   // LOOPING TO FIND THE HASHTAG, WILL USE FIND INSTEAD
-  const brandFeedback = text.split(' ')
-  var company = null
-  var hashtag = null
-  brandFeedback.forEach((word) => {
-    if (word.includes('#')) {
-      company = word.substring(1)
-      hashtag = company.substring(0, 1).toUpperCase()
-    }
-  })
-  console.log(company)
-  console.log(hashtag)
+  // const brandFeedback = text.split(' ')
+  // var company = null
+  // var hashtag = null
+  // brandFeedback.forEach((word) => {
+  //   if (word.includes('#')) {
+  //     company = word.substring(1)
+  //     hashtag = company.substring(0, 1).toUpperCase()
+  //   }
+  // })
+  // console.log(company)
+  // console.log(hashtag)
 }
 formEl.addEventListener('submit', submitHandler)
 
