@@ -1,8 +1,4 @@
 //   formEl.style.backgroundColor = 'yellow'
-//   formEl.classList.add('form_hover')
-
-// VIDEO 35 - MINUTE
-
 // -- GLOBAL --
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
@@ -29,18 +25,43 @@ const submitHandler = (e) => {
   e.preventDefault()
   // get text from textarea
   const text = textareaEl.value
-  // validate if text has a #
+  // validate if text has a # visually with a color outine
   if (text.includes('#') && text.length >= 5) {
-    //add class to color form outline
+    //add class to show valid indicator
     formEl.classList.add('form--valid')
     setTimeout(() => {
       formEl.classList.remove('form--valid')
     }, 2000)
   } else {
+    // add class to show invalid indicator
     formEl.classList.add('form--invalid')
     setTimeout(() => {
       formEl.classList.remove('form--invalid')
     }, 2000)
+    // focus textarea to resume typing
+    textareaEl.focus()
+    // stop the fn execution
+    return
   }
+  // Now that we have the text let's extract: company name, company's 1st letter & date
+  // const hashtag;
+  // const company
+  // const badgeLetter= 0
+  // const daysAgo = 0
+
+  // LOOPING TO FIND THE HASHTAG, WILL USE FIND INSTEAD
+  const brandFeedback = text.split(' ')
+  var company = null
+  var hashtag = null
+  brandFeedback.forEach((word) => {
+    if (word.includes('#')) {
+      company = word.substring(1)
+      hashtag = company.substring(0, 1).toUpperCase()
+    }
+  })
+  console.log(company)
+  console.log(hashtag)
 }
 formEl.addEventListener('submit', submitHandler)
+
+// -- VIDEO 36 - MINUTE 30
