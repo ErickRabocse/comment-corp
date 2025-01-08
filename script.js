@@ -1,5 +1,7 @@
 //   formEl.style.backgroundColor = 'yellow'
 // -- GLOBAL --
+const MAX_CHARS = 150
+
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
 const formEl = document.querySelector('.form')
@@ -10,7 +12,7 @@ const submitBtnEl = document.querySelector('.submit-btn')
 
 const inputHandler = (e) => {
   //determine max num of characters 150
-  const maxChars = 150
+  const maxChars = MAX_CHARS
   //determine num of characters typed (instead of "e" could be textarea)
   const charsTyped = e.target.value.length
   //calculate the num of characters left
@@ -20,7 +22,15 @@ const inputHandler = (e) => {
 }
 textareaEl.addEventListener('input', inputHandler)
 
-// -- FORM COMPONENT --
+// -- FORM COMPONENT -
+// FN ABSTRACTED TO REFACTOR THE CODE AND DRY
+const showVisualIndicator = (textCheck) => {
+  //add class to show valid indicator
+  formEl.classList.add(`form--${textCheck}`)
+  setTimeout(() => {
+    formEl.classList.remove(`form--${textCheck}`)
+  }, 2000)
+}
 //the "submit-event" is linked to "forms" & "click-e" is linked to buttons
 const submitHandler = (e) => {
   // preventing default browser action of submitting data to "action" address trhough refresh.
@@ -29,17 +39,9 @@ const submitHandler = (e) => {
   const text = textareaEl.value
   // validate if text has a # visually with a color outine
   if (text.includes('#') && text.length >= 5) {
-    //add class to show valid indicator
-    formEl.classList.add('form--valid')
-    setTimeout(() => {
-      formEl.classList.remove('form--valid')
-    }, 2000)
+    showVisualIndicator('valid')
   } else {
-    // add class to show invalid indicator
-    formEl.classList.add('form--invalid')
-    setTimeout(() => {
-      formEl.classList.remove('form--invalid')
-    }, 2000)
+    showVisualIndicator('invalid')
     // focus textarea to resume typing
     textareaEl.focus()
     // stop the fn execution
@@ -86,7 +88,7 @@ const submitHandler = (e) => {
   // blur submit btn
   submitBtnEl.blur()
   // reset counter, since it is plain text we can use textContent
-  counterEl.textContent = 150
+  counterEl.textContent = MAX_CHARS
 }
 formEl.addEventListener('submit', submitHandler)
 
