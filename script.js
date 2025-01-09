@@ -96,29 +96,31 @@ formEl.addEventListener('submit', submitHandler)
 fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
   .then((res) => res.json())
   .then((data) => {
-    // creating new feedback item HTML
-    const feedbackItemHTML = `
-    <li class="feedback">
-      <button class="upvote">
-          <i class="fa-solid fa-caret-up upvote__icon"></i>
-          <span class="upvote__count">${data.feedbacks[0].upvoteCount}</span>
-      </button>
-      <section class="feedback__badge">
-          <p class="feedback__letter">${data.feedbacks[0].badgeLetter}</p>
-      </section>
-      <div class="feedback__content">
-          <p class="feedback__company">${data.feedbacks[0].company}</p>
-          <p class="feedback__text">${data.feedbacks[0].text}</p>
-      </div>
-      <p class="feedback__date">${
-        data.feedbacks[0].daysAgo === 0
-          ? 'NEW'
-          : `${data.feedbacks[0].daysAgo}d`
-      }</p>
-    </li>
-    `
-    // Insert feedback content into list
-    feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+    console.log(data.feedbacks[0])
+
+    //iterate over each element in the feedbacks array & render it in list
+    data.feedbacks.forEach((element) => {
+      const feedbackItemHTML = `
+        <li class="feedback">
+          <button class="upvote">
+              <i class="fa-solid fa-caret-up upvote__icon"></i>
+              <span class="upvote__count">${element.upvoteCount}</span>
+          </button>
+          <section class="feedback__badge">
+              <p class="feedback__letter">${element.badgeLetter}</p>
+          </section>
+          <div class="feedback__content">
+              <p class="feedback__company">${element.company}</p>
+              <p class="feedback__text">${element.text}</p>
+          </div>
+          <p class="feedback__date">${
+            element.daysAgo === 0 ? 'NEW' : `${element.daysAgo}d`
+          }</p>
+        </li>
+        `
+      // Insert feedback content into list
+      feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+    })
   })
 
 // -- VIDEO 38 - MINUTE 6:11
