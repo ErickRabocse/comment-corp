@@ -124,5 +124,12 @@ fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
       feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
     })
   })
+  .catch((err) => {
+    spinnerEl.remove()
+    feedbackListEl.insertAdjacentHTML(
+      'beforeend',
+      `<h2>An error has occurred: <br> ${err.message}<h2>`
+    )
+  })
 
-// -- VIDEO 38 - MINUTE 6:11
+// -- VIDEO 39 - MINUTE 00:00
