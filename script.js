@@ -7,6 +7,7 @@ const counterEl = document.querySelector('.counter')
 const formEl = document.querySelector('.form')
 const feedbackListEl = document.querySelector('.feedbacks')
 const submitBtnEl = document.querySelector('.submit-btn')
+const spinnerEl = document.querySelector('.spinner')
 
 // -- COUNTER COMPONENT --
 
@@ -97,8 +98,9 @@ fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
   .then((res) => res.json())
   .then((data) => {
     console.log(data.feedbacks[0])
-
-    //iterate over each element in the feedbacks array & render it in list
+    // remove spinner
+    spinnerEl.remove()
+    // iterate over each element in the feedbacks array & render it in list
     data.feedbacks.forEach((element) => {
       const feedbackItemHTML = `
         <li class="feedback">
