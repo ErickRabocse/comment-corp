@@ -34,7 +34,6 @@ const renderFeedbackItem = (feedbackItem) => {
 }
 
 // -- COUNTER COMPONENT --
-
 const inputHandler = (e) => {
   //determine max num of characters 150
   const maxChars = MAX_CHARS
@@ -97,8 +96,17 @@ const submitHandler = (e) => {
     daysAgo,
     text,
   }
-  // Renering HTML feedback item
+  // Rendering HTML feedback item
   renderFeedbackItem(feedbackItem)
+  // Sending feedback item to server
+  fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks', {
+    method: 'POST',
+    body: JSON.stringify(feedbackItem),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
   // clear text area, since it's an input we can use value
   textareaEl.value = ''
   // blur submit btn
@@ -126,4 +134,4 @@ fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
     )
   })
 
-// -- VIDEO 39 - MINUTE 00:00
+// -- VIDEO 40 - MINUTE 00:00
