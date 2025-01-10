@@ -116,10 +116,7 @@ fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
     // remove spinner
     spinnerEl.remove()
     // iterate over each element in the feedbacks array & render it in list
-    data.feedbacks.forEach((feedbackItem) => {
-      // Renering HTML feedback item
-      renderFeedbackItem(feedbackItem)
-    })
+    data.feedbacks.forEach((feedbackItem) => renderFeedbackItem(feedbackItem))
   })
   .catch((err) => {
     spinnerEl.remove()
