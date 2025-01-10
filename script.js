@@ -9,6 +9,30 @@ const feedbackListEl = document.querySelector('.feedbacks')
 const submitBtnEl = document.querySelector('.submit-btn')
 const spinnerEl = document.querySelector('.spinner')
 
+const renderFeedbackItem = (feedbackItem) => {
+  //new feedback item HTML
+  const feedbackItemHTML = `
+  <li class="feedback">
+    <button class="upvote">
+        <i class="fa-solid fa-caret-up upvote__icon"></i>
+        <span class="upvote__count">${feedbackItem.upvoteCount}</span>
+    </button>
+    <section class="feedback__badge">
+        <p class="feedback__letter">${feedbackItem.badgeLetter}</p>
+    </section>
+    <div class="feedback__content">
+        <p class="feedback__company">${feedbackItem.company}</p>
+        <p class="feedback__text">${feedbackItem.text}</p>
+    </div>
+    <p class="feedback__date">${
+      feedbackItem.daysAgo === 0 ? 'NEW' : `${feedbackItem.daysAgo}d`
+    }</p>
+  </li>
+  `
+  // Insert feedback content into list
+  feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+}
+
 // -- COUNTER COMPONENT --
 
 const inputHandler = (e) => {
@@ -62,28 +86,19 @@ const submitHandler = (e) => {
   const hashtag = text.split(' ').find((word) => word.includes('#'))
   const company = hashtag.substring(1)
   const badgeLetter = company.substring(0, 1).toUpperCase()
-  console.log(hashtag, company, badgeLetter)
   const upvoteCount = 0
   const daysAgo = 0
-  // creating new feedback item HTML
-  const feedbackItemHTML = `
-  <li class="feedback">
-    <button class="upvote">
-        <i class="fa-solid fa-caret-up upvote__icon"></i>
-        <span class="upvote__count">${upvoteCount}</span>
-    </button>
-    <section class="feedback__badge">
-        <p class="feedback__letter">${badgeLetter}</p>
-    </section>
-    <div class="feedback__content">
-        <p class="feedback__company">${company}</p>
-        <p class="feedback__text">${text}</p>
-    </div>
-    <p class="feedback__date">${daysAgo === 0 ? 'NEW' : `${daysAgo}d`}</p>
-  </li>
-  `
-  // Insert feedback content into list
-  feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+  // create feedback item object
+  const feedbackItem = {
+    hashtag,
+    company,
+    badgeLetter,
+    upvoteCount,
+    daysAgo,
+    text,
+  }
+  // Renering HTML feedback item
+  renderFeedbackItem(feedbackItem)
   // clear text area, since it's an input we can use value
   textareaEl.value = ''
   // blur submit btn
