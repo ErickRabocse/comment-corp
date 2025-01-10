@@ -116,27 +116,9 @@ fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
     // remove spinner
     spinnerEl.remove()
     // iterate over each element in the feedbacks array & render it in list
-    data.feedbacks.forEach((element) => {
-      const feedbackItemHTML = `
-        <li class="feedback">
-          <button class="upvote">
-              <i class="fa-solid fa-caret-up upvote__icon"></i>
-              <span class="upvote__count">${element.upvoteCount}</span>
-          </button>
-          <section class="feedback__badge">
-              <p class="feedback__letter">${element.badgeLetter}</p>
-          </section>
-          <div class="feedback__content">
-              <p class="feedback__company">${element.company}</p>
-              <p class="feedback__text">${element.text}</p>
-          </div>
-          <p class="feedback__date">${
-            element.daysAgo === 0 ? 'NEW' : `${element.daysAgo}d`
-          }</p>
-        </li>
-        `
-      // Insert feedback content into list
-      feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML)
+    data.feedbacks.forEach((feedbackItem) => {
+      // Renering HTML feedback item
+      renderFeedbackItem(feedbackItem)
     })
   })
   .catch((err) => {
