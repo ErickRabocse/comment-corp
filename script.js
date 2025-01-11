@@ -125,7 +125,31 @@ const submitHandler = (e) => {
   counterEl.textContent = MAX_CHARS
 }
 formEl.addEventListener('submit', submitHandler)
+
 // -- FEEDBACK LIST COMPONENT --
+const feebackClickHandler = (e) => {
+  // getting clicked HTML-element
+  const elementClicked = e.target
+  // determining if the element clicked has the className "upvote" (thanks to the BEM naming convention ) TO UPVOTE or EXPAND
+  const upvoteIntention = elementClicked.className.includes('upvote')
+  // running the appropriate logic
+  if (upvoteIntention) {
+    // get the closest upvote button
+    const upvoteBtnEl = elementClicked.closest('.upvote')
+    // disable upvote button (to prevent voting more than one time)
+    upvoteBtnEl.disabled = true
+    // selecting the upvote count within the upvote button
+    const upvoteCountEl = upvoteBtnEl.querySelector('.upvote__count')
+    // get current upvote count
+    let upvoteCountNumber = +upvoteCountEl.textContent //parseInt(upvoteCountEl.textContent)
+    // update upvote count in the page "incremented by 1"
+    upvoteCountEl.textContent = ++upvoteCountNumber //upvoteCountNumber += 1
+  } else {
+    // expand only the feedback clicked
+    elementClicked.closest('.feedback').classList.toggle('feedback--expand')
+  }
+}
+feedbackListEl.addEventListener('click', feebackClickHandler)
 
 fetch(`${BASE_API_URL}/feedbacks`)
   .then((res) => res.json())
@@ -144,4 +168,4 @@ fetch(`${BASE_API_URL}/feedbacks`)
     )
   })
 
-// -- VIDEO 40 - MINUTE 00:00
+// -- VIDEO 41 - MINUTE 00:00
