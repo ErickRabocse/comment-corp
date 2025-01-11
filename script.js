@@ -1,6 +1,7 @@
 //   formEl.style.backgroundColor = 'yellow'
 // -- GLOBAL --
 const MAX_CHARS = 150
+const BASE_API_URL = 'https://bytegrad.com/course-assets/js/1/api'
 
 const textareaEl = document.querySelector('.form__textarea')
 const counterEl = document.querySelector('.counter')
@@ -99,7 +100,7 @@ const submitHandler = (e) => {
   // Rendering HTML feedback item
   renderFeedbackItem(feedbackItem)
   // Sending feedback item to server
-  fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks', {
+  fetch(`${BASE_API_URL}/feedbacks`, {
     method: 'POST',
     body: JSON.stringify(feedbackItem),
     headers: {
@@ -107,6 +108,15 @@ const submitHandler = (e) => {
       'Content-Type': 'application/json',
     },
   })
+    .then((res) => {
+      if (!res.ok) {
+        // Guard clause: exists the fn if something with the return
+        return console.log('Something went wrong')
+      } else {
+        console.log('Successfully submitted')
+      }
+    })
+    .catch((err) => console.log(err.message))
   // clear text area, since it's an input we can use value
   textareaEl.value = ''
   // blur submit btn
@@ -117,7 +127,7 @@ const submitHandler = (e) => {
 formEl.addEventListener('submit', submitHandler)
 // -- FEEDBACK LIST COMPONENT --
 
-fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
+fetch(`${BASE_API_URL}/feedbacks`)
   .then((res) => res.json())
   .then((data) => {
     console.log(data.feedbacks[0])
