@@ -9,6 +9,7 @@ const formEl = document.querySelector('.form')
 const feedbackListEl = document.querySelector('.feedbacks')
 const submitBtnEl = document.querySelector('.submit-btn')
 const spinnerEl = document.querySelector('.spinner')
+const hashtagListEl = document.querySelector('.hashtags')
 
 const renderFeedbackItem = (feedbackItem) => {
   //new feedback item HTML
@@ -168,4 +169,20 @@ fetch(`${BASE_API_URL}/feedbacks`)
     )
   })
 
-// -- VIDEO 41 - MINUTE 00:00
+// -- HASHTAG LIST COMPONENT
+const hashtagClickHandler = (e) => {
+  // getting click hashtag-element
+  const hashClicked = e.target
+  // stop the fn if click happens in the list, but outside the buttons
+
+  if (hashClicked.className.includes('hashtags')) { //if ((hashClicked.className === 'hastags'))
+    return
+  } else {
+    // obtaning company name
+    const companyName = hashClicked.textContent.substring(1)
+    console.log(companyName)
+  }
+}
+
+hashtagListEl.addEventListener('click', hashtagClickHandler)
+// -- VIDEO 42 - MINUTE 00:00
