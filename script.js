@@ -175,12 +175,19 @@ const hashtagClickHandler = (e) => {
   const hashClicked = e.target
   // stop the fn if click happens in the list, but outside the buttons
 
-  if (hashClicked.className.includes('hashtags')) { //if ((hashClicked.className === 'hastags'))
+  if (hashClicked.className.includes('hashtags')) {
+    //if ((hashClicked.className === 'hastags'))
     return
   } else {
     // obtaning company name
-    const companyName = hashClicked.textContent.substring(1)
-    console.log(companyName)
+    const companyName = hashClicked.textContent
+      .substring(1)
+      .toLowerCase()
+      .trim()
+    //iterate over each feedback item in the feedback likst
+    feedbackListEl.childNodes.forEach((childNode) => {
+      console.log(childNode)
+    })
   }
 }
 
