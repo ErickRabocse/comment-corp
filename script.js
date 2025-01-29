@@ -39,7 +39,7 @@ const renderFeedbackItem = (feedbackItem) => {
 const inputHandler = (e) => {
   //determine max num of characters 150
   const maxChars = MAX_CHARS
-  //determine num of characters typed (instead of "e" could be textarea)
+  //determine num of characters typed (instead of "e" could be textareaEl)
   const charsTyped = e.target.value.length
   //calculate the num of characters left
   const charsLeft = maxChars - charsTyped
@@ -192,4 +192,4 @@ const hashtagClickHandler = (e) => {
 }
 
 hashtagListEl.addEventListener('click', hashtagClickHandler)
-// -- VIDEO 42 - MINUTE 00:00
+// -- VIDEO 42 - MINUTE 14:24
