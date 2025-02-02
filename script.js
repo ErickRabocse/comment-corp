@@ -36,17 +36,19 @@ const renderFeedbackItem = (feedbackItem) => {
 }
 
 // -- COUNTER COMPONENT --
-const inputHandler = (e) => {
-  //determine max num of characters 150
-  const maxChars = MAX_CHARS
-  //determine num of characters typed (instead of "e" could be textareaEl)
-  const charsTyped = e.target.value.length
-  //calculate the num of characters left
-  const charsLeft = maxChars - charsTyped
-  //show number of characters left
-  counterEl.textContent = charsLeft
-}
-textareaEl.addEventListener('input', inputHandler)
+;(() => {
+  const inputHandler = (e) => {
+    //determine max num of characters 150
+    const maxChars = MAX_CHARS
+    //determine num of characters typed (instead of "e" could be textareaEl)
+    const charsTyped = e.target.value.length
+    //calculate the num of characters left
+    const charsLeft = maxChars - charsTyped
+    //show number of characters left
+    counterEl.textContent = charsLeft
+  }
+  textareaEl.addEventListener('input', inputHandler)
+})()
 
 // -- FORM COMPONENT -
 // FN ABSTRACTED TO REFACTOR THE CODE AND DRY
@@ -58,99 +60,91 @@ const showVisualIndicator = (textCheck) => {
   }, 2000)
 }
 //the "submit-event" is linked to "forms" & "click-e" is linked to buttons
-const submitHandler = (e) => {
-  // preventing default browser action of submitting data to "action" address trhough refresh.
-  e.preventDefault()
-  // get text from textarea
-  const text = textareaEl.value
-  // validate if text has a # visually with a color outine
-  if (text.includes('#') && text.length >= 5) {
-    showVisualIndicator('valid')
-  } else {
-    showVisualIndicator('invalid')
-    // focus textarea to resume typing
-    textareaEl.focus()
-    // stop the fn execution
-    return
-  }
-  // LOOPING TO FIND THE HASHTAG, WILL USE FIND INSTEAD
-  // const brandFeedback = text.split(' ')
-  // var company = null
-  // var hashtag = null
-  // brandFeedback.forEach((word) => {
-  //   if (word.includes('#')) {
-  //     company = word.substring(1)
-  //     hashtag = company.substring(0, 1).toUpperCase()
-  //   }
-  // })
-  // Now that we have the text let's extract: company name, company's 1st letter & date
-  const hashtag = text.split(' ').find((word) => word.includes('#'))
-  const company = hashtag.substring(1)
-  const badgeLetter = company.substring(0, 1).toUpperCase()
-  const upvoteCount = 0
-  const daysAgo = 0
-  // create feedback item object
-  const feedbackItem = {
-    hashtag,
-    company,
-    badgeLetter,
-    upvoteCount,
-    daysAgo,
-    text,
-  }
-  // Rendering HTML feedback item
-  renderFeedbackItem(feedbackItem)
-  // Sending feedback item to server
-  fetch(`${BASE_API_URL}/feedbacks`, {
-    method: 'POST',
-    body: JSON.stringify(feedbackItem),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => {
-      if (!res.ok) {
-        // Guard clause: exists the fn if something with the return
-        return console.log('Something went wrong')
-      } else {
-        console.log('Successfully submitted')
-      }
+;(() => {
+  const submitHandler = (e) => {
+    // preventing default browser action of submitting data to "action" address trhough refresh.
+    e.preventDefault()
+    // get text from textarea
+    const text = textareaEl.value
+    // validate if text has a # visually with a color outine
+    if (text.includes('#') && text.length >= 5) {
+      showVisualIndicator('valid')
+    } else {
+      showVisualIndicator('invalid')
+      // focus textarea to resume typing
+      textareaEl.focus()
+      // stop the fn execution
+      return
+    }
+    // Now that we have the text let's extract: company name, company's 1st letter & date
+    const hashtag = text.split(' ').find((word) => word.includes('#'))
+    const company = hashtag.substring(1)
+    const badgeLetter = company.substring(0, 1).toUpperCase()
+    const upvoteCount = 0
+    const daysAgo = 0
+    // create feedback item object
+    const feedbackItem = {
+      hashtag,
+      company,
+      badgeLetter,
+      upvoteCount,
+      daysAgo,
+      text,
+    }
+    // Rendering HTML feedback item
+    renderFeedbackItem(feedbackItem)
+    // Sending feedback item to server
+    fetch(`${BASE_API_URL}/feedbacks`, {
+      method: 'POST',
+      body: JSON.stringify(feedbackItem),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
     })
-    .catch((err) => console.log(err.message))
-  // clear text area, since it's an input we can use value
-  textareaEl.value = ''
-  // blur submit btn
-  submitBtnEl.blur()
-  // reset counter, since it is plain text we can use textContent
-  counterEl.textContent = MAX_CHARS
-}
-formEl.addEventListener('submit', submitHandler)
-
-// -- FEEDBACK LIST COMPONENT --
-const feebackClickHandler = (e) => {
-  // getting clicked HTML-element
-  const elementClicked = e.target
-  // determining if the element clicked has the className "upvote" (thanks to the BEM naming convention ) TO UPVOTE or EXPAND
-  const upvoteIntention = elementClicked.className.includes('upvote')
-  // running the appropriate logic
-  if (upvoteIntention) {
-    // get the closest upvote button
-    const upvoteBtnEl = elementClicked.closest('.upvote')
-    // disable upvote button (to prevent voting more than one time)
-    upvoteBtnEl.disabled = true
-    // selecting the upvote count within the upvote button
-    const upvoteCountEl = upvoteBtnEl.querySelector('.upvote__count')
-    // get current upvote count
-    let upvoteCountNumber = +upvoteCountEl.textContent //parseInt(upvoteCountEl.textContent)
-    // update upvote count in the page "incremented by 1"
-    upvoteCountEl.textContent = ++upvoteCountNumber //upvoteCountNumber += 1
-  } else {
-    // expand only the feedback clicked
-    elementClicked.closest('.feedback').classList.toggle('feedback--expand')
+      .then((res) => {
+        if (!res.ok) {
+          // Guard clause: exists the fn if something with the return
+          return console.log('Something went wrong')
+        } else {
+          console.log('Successfully submitted')
+        }
+      })
+      .catch((err) => console.log(err.message))
+    // clear text area, since it's an input we can use value
+    textareaEl.value = ''
+    // blur submit btn
+    submitBtnEl.blur()
+    // reset counter, since it is plain text we can use textContent
+    counterEl.textContent = MAX_CHARS
   }
-}
-feedbackListEl.addEventListener('click', feebackClickHandler)
+  formEl.addEventListener('submit', submitHandler)
+})() // -- FEEDBACK LIST COMPONENT --
+;(() => {
+  const feebackClickHandler = (e) => {
+    // getting clicked HTML-element
+    const elementClicked = e.target
+    // determining if the element clicked has the className "upvote" (thanks to the BEM naming convention ) TO UPVOTE or EXPAND
+    const upvoteIntention = elementClicked.className.includes('upvote')
+    // running the appropriate logic
+    if (upvoteIntention) {
+      // get the closest upvote button
+      const upvoteBtnEl = elementClicked.closest('.upvote')
+      // disable upvote button (to prevent voting more than one time)
+      upvoteBtnEl.disabled = true
+      // selecting the upvote count within the upvote button
+      const upvoteCountEl = upvoteBtnEl.querySelector('.upvote__count')
+      // get current upvote count
+      let upvoteCountNumber = +upvoteCountEl.textContent //parseInt(upvoteCountEl.textContent)
+      // update upvote count in the page "incremented by 1"
+      upvoteCountEl.textContent = ++upvoteCountNumber //upvoteCountNumber += 1
+    } else {
+      // expand only the feedback clicked
+      elementClicked.closest('.feedback').classList.toggle('feedback--expand')
+    }
+  }
+  feedbackListEl.addEventListener('click', feebackClickHandler)
+})()
 
 fetch(`${BASE_API_URL}/feedbacks`)
   .then((res) => res.json())
@@ -167,38 +161,38 @@ fetch(`${BASE_API_URL}/feedbacks`)
       'beforeend',
       `<h2>An error has occurred: <br> ${err.message}<h2>`
     )
-  })
-
-// -- HASHTAG LIST COMPONENT
-const hashtagClickHandler = (e) => {
-  // getting click hashtag-element
-  const clickedEl = e.target
-  // stop the fn if click happens in the list, but outside the buttons
-  if (clickedEl.className.includes('hashtags')) {
-    //if ((clickedEl.className === 'hastags'))
-    return
-  } else {
-    // obtaning company name
-    const companyNameFromHashtagList = clickedEl.textContent
-      .substring(1)
-      .toLowerCase()
-      .trim()
-    //iterate over each feedback item in the feedback likst
-    feedbackListEl.childNodes.forEach((childNode) => {
-      // stop iteration if the childnode is a text-node
-      if (childNode.nodeType === 3) return
-      // extracting company name
-      const companyNameFromFeedbackItemList = childNode
-        .querySelector('.feedback__company')
-        .textContent.toLowerCase()
+  }) // -- HASHTAG LIST COMPONENT
+// Wrapping everything in an IIFE to simulate modularity
+;(() => {
+  const hashtagClickHandler = (e) => {
+    // getting click hashtag-element
+    const clickedEl = e.target
+    // stop the fn if click happens in the list, but outside the buttons
+    if (clickedEl.className.includes('hashtags')) {
+      //if ((clickedEl.className === 'hastags'))
+      return
+    } else {
+      // obtaning company name
+      const companyNameFromHashtagList = clickedEl.textContent
+        .substring(1)
+        .toLowerCase()
         .trim()
-      // removing feeback items from list if their company names are not the same as the one click on the hashtag list
-      if (companyNameFromHashtagList !== companyNameFromFeedbackItemList) {
-        childNode.remove()
-      }
-    })
+      //iterate over each feedback item in the feedback likst
+      feedbackListEl.childNodes.forEach((childNode) => {
+        // stop iteration if the childnode is a text-node
+        if (childNode.nodeType === 3) return
+        // extracting company name
+        const companyNameFromFeedbackItemList = childNode
+          .querySelector('.feedback__company')
+          .textContent.toLowerCase()
+          .trim()
+        // removing feeback items from list if their company names are not the same as the one click on the hashtag list
+        if (companyNameFromHashtagList !== companyNameFromFeedbackItemList) {
+          childNode.remove()
+        }
+      })
+    }
   }
-}
 
-hashtagListEl.addEventListener('click', hashtagClickHandler)
-// -- VIDEO 42 - MINUTE 14:24
+  hashtagListEl.addEventListener('click', hashtagClickHandler)
+})()
