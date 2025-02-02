@@ -179,7 +179,10 @@ const hashtagClickHandler = (e) => {
     return
   } else {
     // obtaning company name
-    const companyName = clickedEl.textContent.substring(1).toLowerCase().trim()
+    const companyNameFromHashtagList = clickedEl.textContent
+      .substring(1)
+      .toLowerCase()
+      .trim()
     //iterate over each feedback item in the feedback likst
     feedbackListEl.childNodes.forEach((childNode) => {
       // stop iteration if the childnode is a text-node
@@ -189,8 +192,10 @@ const hashtagClickHandler = (e) => {
         .querySelector('.feedback__company')
         .textContent.toLowerCase()
         .trim()
-
-      console.log(companyNameFromFeedbackItemList)
+      // removing feeback items from list if their company names are not the same as the one click on the hashtag list
+      if (companyNameFromHashtagList !== companyNameFromFeedbackItemList) {
+        childNode.remove()
+      }
     })
   }
 }
