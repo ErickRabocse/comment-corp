@@ -172,21 +172,25 @@ fetch(`${BASE_API_URL}/feedbacks`)
 // -- HASHTAG LIST COMPONENT
 const hashtagClickHandler = (e) => {
   // getting click hashtag-element
-  const hashClicked = e.target
+  const clickedEl = e.target
   // stop the fn if click happens in the list, but outside the buttons
-
-  if (hashClicked.className.includes('hashtags')) {
-    //if ((hashClicked.className === 'hastags'))
+  if (clickedEl.className.includes('hashtags')) {
+    //if ((clickedEl.className === 'hastags'))
     return
   } else {
     // obtaning company name
-    const companyName = hashClicked.textContent
-      .substring(1)
-      .toLowerCase()
-      .trim()
+    const companyName = clickedEl.textContent.substring(1).toLowerCase().trim()
     //iterate over each feedback item in the feedback likst
     feedbackListEl.childNodes.forEach((childNode) => {
-      console.log(childNode)
+      // stop iteration if the childnode is a text-node
+      if (childNode.nodeType === 3) return
+      // extracting company name
+      const companyNameFromFeedbackItemList = childNode
+        .querySelector('.feedback__company')
+        .textContent.toLowerCase()
+        .trim()
+
+      console.log(companyNameFromFeedbackItemList)
     })
   }
 }
